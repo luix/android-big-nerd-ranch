@@ -7,9 +7,9 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/question_text"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:padding="@dimen/question_text_padding"/>
@@ -32,6 +32,12 @@
             android:text="@string/false_button"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_button" />
 
 </LinearLayout>
 
