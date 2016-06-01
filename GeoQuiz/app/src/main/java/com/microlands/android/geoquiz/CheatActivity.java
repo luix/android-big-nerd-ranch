@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 public class CheatActivity extends AppCompatActivity {
 
+    private static final String TAG = CheatActivity.class.getSimpleName();
+
     private static final String KEY_CHEATING = "key_cheating";
 
     private static final String EXTRA_ANSWER_TRUE = "com.microlands.android.geoquiz.answer_is_true";
@@ -81,6 +83,7 @@ public class CheatActivity extends AppCompatActivity {
                 } else {
                     mAnswerTextView.setText(R.string.false_button);
                 }
+                mIsAnswerShown = true;
                 setAnswerShownResult(true);
             }
         });
@@ -89,7 +92,6 @@ public class CheatActivity extends AppCompatActivity {
     private void setAnswerShownResult(boolean isAnswerShown) {
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
-        mIsAnswerShown = isAnswerShown;
         setResult(RESULT_OK, data);
     }
 }

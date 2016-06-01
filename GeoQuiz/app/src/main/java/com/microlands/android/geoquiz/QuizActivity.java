@@ -187,11 +187,11 @@ public class QuizActivity extends AppCompatActivity {
         int foo = mCurrentIndex + i;
         int bar = (foo < 0) ? mQuestionBank.length - 1 : foo;
         mCurrentIndex = bar % mQuestionBank.length;
+        mIsCheater = false;
         updateQuestion();
     }
 
     private void updateQuestion() {
-        mIsCheater = false;
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
     }
