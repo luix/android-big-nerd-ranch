@@ -1,0 +1,22 @@
+<!--
+  ~ Copyright (c) 2016. Microlands Systems
+  ~
+  ~ {project}  Copyright (C) {year}  {fullname}
+  ~ This program comes with ABSOLUTELY NO WARRANTY.
+  ~ This is free software, and you are welcome to redistribute it
+  ~ under certain conditions.
+  -->
+
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/crime_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/crime_title_hint"/>
+
+</LinearLayout>

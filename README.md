@@ -7,7 +7,7 @@ My Android apps implementation for The Big Nerd Ranch's Android Programming 2nd 
 
 
 - [ ] _CriminalIntent_
-    - CriminalIntents lets you keep record of your colleagues' lapses around the office. 
+    - CriminalIntents records the details of "office crimes" and lets you keep record of your colleagues' lapses around the office. 
     - This app implements fragments, master-detail interfaces, menus, the camera, implicit intents and more.
 
 
