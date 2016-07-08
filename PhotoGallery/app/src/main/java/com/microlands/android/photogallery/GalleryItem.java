@@ -1,13 +1,18 @@
 package com.microlands.android.photogallery;
 
+import android.net.Uri;
+
 /**
  * Created by luisvivero on 7/3/16.
  */
 
 public class GalleryItem {
+    private static final String PHOTOS_END_POINT = "http://www.flickr.com/photos/";
+
     private String mCaption;
     private String mId;
     private String mUrl;
+    private String mOwner;
 
     @Override
     public String toString() {
@@ -36,5 +41,21 @@ public class GalleryItem {
 
     public void setCaption(String caption) {
         mCaption = caption;
+    }
+
+    public String getOwner() {
+        return mOwner;
+    }
+
+    public void setOwner(String owner) {
+        mOwner = owner;
+    }
+
+    public Uri getPhotoPageUri() {
+        return Uri.parse(PHOTOS_END_POINT)
+                .buildUpon()
+                .appendPath(mOwner)
+                .appendPath(mId)
+                .build();
     }
 }
