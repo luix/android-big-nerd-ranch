@@ -12,13 +12,13 @@ import android.support.v4.app.Fragment;
 public class PhotoPageActivity extends SingleFragmentActivity {
 
     public static Intent newIntent(Context context, Uri photoPageUri) {
-        Intent intent = new Intent(context, PhotoGalleryActivity.class);
+        Intent intent = new Intent(context, PhotoPageActivity.class);
         intent.setData(photoPageUri);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        return null;
+        return PhotoPageFragment.newInstance(getIntent().getData());
     }
 }
