@@ -7,12 +7,18 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by luisvivero on 7/8/16.
  */
 
 public class BoxDrawingView extends View {
     private static final String TAG = "BoxDrawingView";
+
+    private Box mCurrentBox;
+    private List<Box> mBoxes = new ArrayList<>();
 
     public BoxDrawingView(Context context) {
         this(context, null);
@@ -31,18 +37,27 @@ public class BoxDrawingView extends View {
 
             case MotionEvent.ACTION_DOWN:
                 action = "ACTION_DOWN";
+                // Reset drawing state
+                mCurrentBox = new Box(current);
+                mBoxes.add(mCurrentBox);
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 action = "ACTION_MOVE";
+                if (mCurrentBox != null) {
+                    mCurrentBox.setCurrent(current);
+                    invalidate();
+                }
                 break;
 
             case MotionEvent.ACTION_UP:
                 action = "ACTION_UP";
+                mCurrentBox = null;
                 break;
 
             case MotionEvent.ACTION_CANCEL:
                 action = "ACTION_CANCEL";
+                mCurrentBox = null;
                 break;
         }
 
