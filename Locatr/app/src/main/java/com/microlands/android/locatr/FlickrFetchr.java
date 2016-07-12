@@ -115,9 +115,9 @@ public class FlickrFetchr {
     private String buildUrl(Location location) {
         return ENDPOINT.buildUpon()
                 .appendQueryParameter("method", SEARCH_METHOD)
-                .appendQueryParameter("lat", location.getLatitude())
-                .appendQueryParameter("lon", location.getLongitude())
-                .build();
+                .appendQueryParameter("lat", String.valueOf(location.getLatitude()))
+                .appendQueryParameter("lon", String.valueOf(location.getLongitude()))
+                .build().toString();
     }
 
     private void parseItems(List<GalleryItem> items, JSONObject jsonBody)
