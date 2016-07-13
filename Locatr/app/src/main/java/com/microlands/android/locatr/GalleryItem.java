@@ -13,6 +13,8 @@ public class GalleryItem {
     private String mId;
     private String mUrl;
     private String mOwner;
+    private double mLatitude;
+    private double mLongitude;
 
     @Override
     public String toString() {
@@ -41,6 +43,22 @@ public class GalleryItem {
 
     public void setCaption(String caption) {
         mCaption = caption;
+    }
+
+    public double getLatitude() {
+        return mLatitude;
+    }
+
+    public void setLatitude(double latitude) {
+        mLatitude = latitude;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
+    }
+
+    public void setLongitude(double longitude) {
+        mLongitude = longitude;
     }
 
     public String getOwner() {

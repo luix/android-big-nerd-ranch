@@ -20,7 +20,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +40,10 @@ public class LocatrFragment extends SupportMapFragment {
     private static final String TAG = "LocatrFragment";
 
     private GoogleApiClient mGoogleApiClient;
+    private GoogleMap mMap;
+    private Bitmap mMapImage;
+    private GalleryItem mMapItem;
+    private Location mCurrentLocation;
 
     public static LocatrFragment newInstance() {
         return new LocatrFragment();
@@ -42,6 +52,7 @@ public class LocatrFragment extends SupportMapFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate: ");
         setHasOptionsMenu(true);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -49,6 +60,7 @@ public class LocatrFragment extends SupportMapFragment {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
+                        Log.i(TAG, "GoogleApiClient .. onConnected: ");
                         getActivity().invalidateOptionsMenu();
                     }
 
@@ -58,6 +70,15 @@ public class LocatrFragment extends SupportMapFragment {
                     }
                 })
                 .build();
+
+        getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                Log.i(TAG, "getMapAsync .. onMapReady: " + googleMap.toString());
+                mMap = googleMap;
+                updateUI();
+            }
+        });
     }
 
     @Override
@@ -111,14 +132,41 @@ public class LocatrFragment extends SupportMapFragment {
                         });
     }
 
+    private void updateUI() {
+        Log.i(TAG, "updateUI: ");
+        if (mMap == null || mMapImage == null) {
+            Log.i(TAG, "mMap == null || mMapImage == null");
+            return;
+        }
+
+        LatLng itemPoint = new LatLng(mMapItem.getLatitude(), mMapItem.getLongitude());
+        LatLng myPoint = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(itemPoint)
+                .include(myPoint)
+                .build();
+
+        int margin = getResources().getDimensionPixelOffset(R.dimen.map_inset_margin);
+        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);
+        mMap.animateCamera(update);
+    }
+
     private class SearchTask extends AsyncTask<Location, Void, Void> {
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
+        private Location mLocation;
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
 
         @Override
         protected Void doInBackground(Location... params) {
+            mLocation = params[0];
             FlickrFetchr fetchr = new FlickrFetchr();
-            List<GalleryItem> items = fetchr.searchPhotos(params[0]);
+            List<GalleryItem> items = fetchr.searchPhotos(mLocation);
 
             if (items.size() == 0) {
                 return null;
@@ -138,7 +186,11 @@ public class LocatrFragment extends SupportMapFragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            mMapImage = mBitmap;
+            mMapItem = mGalleryItem;
+            mCurrentLocation = mLocation;
 
+            updateUI();
         }
     }
 }

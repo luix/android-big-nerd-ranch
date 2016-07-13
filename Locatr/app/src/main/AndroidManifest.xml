@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="7F:E5:51:8A:8C:FE:0F:E1:9C:0C:02:08:4B:A5:1E:17:D6:E7:2B:43"/>
+            android:value="AIzaSyANesmVy64FT7KdPDGuFXz0CI_K_FlYTko"/>
 
         <activity android:name=".LocatrActivity">
             <intent-filter>
