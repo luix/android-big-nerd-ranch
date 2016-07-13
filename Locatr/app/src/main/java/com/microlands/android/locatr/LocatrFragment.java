@@ -20,7 +20,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.personalized.internal.TestDataImpl;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,11 +29,10 @@ import java.util.List;
  * Created by luisvivero on 7/10/16.
  */
 
-public class LocatrFragment extends Fragment {
+public class LocatrFragment extends SupportMapFragment {
 
     private static final String TAG = "LocatrFragment";
 
-    private ImageView mImageView;
     private GoogleApiClient mGoogleApiClient;
 
     public static LocatrFragment newInstance() {
@@ -59,16 +58,6 @@ public class LocatrFragment extends Fragment {
                     }
                 })
                 .build();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_locatr, container, false);
-
-        mImageView = (ImageView) view.findViewById(R.id.image);
-
-        return view;
     }
 
     @Override
@@ -149,7 +138,7 @@ public class LocatrFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            mImageView.setImageBitmap(mBitmap);
+
         }
     }
 }
