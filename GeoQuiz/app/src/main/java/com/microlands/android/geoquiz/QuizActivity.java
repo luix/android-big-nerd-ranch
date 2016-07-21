@@ -187,13 +187,18 @@ public class QuizActivity extends AppCompatActivity {
         int foo = mCurrentIndex + i;
         int bar = (foo < 0) ? mQuestionBank.length - 1 : foo;
         mCurrentIndex = bar % mQuestionBank.length;
-        mIsCheater = false;
         updateQuestion();
     }
 
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        mIsCheater = mQuestionBank[mCurrentIndex].isCheated();
+        if (mIsCheater) {
+            mCheatButton.setText(getResources().getString(R.string.cheated_label));
+        } else {
+            mCheatButton.setText(getResources().getString(R.string.cheat_button));
+        }
     }
 
     private void checkAnswer(boolean userPressedTrue) {
@@ -201,6 +206,8 @@ public class QuizActivity extends AppCompatActivity {
         int idMessage;
         if (mIsCheater) {
             idMessage = R.string.judgment_toast;
+            mQuestionBank[mCurrentIndex].setCheated(mIsCheater);
+            mCheatButton.setText(getResources().getString(R.string.cheated_label));
         } else {
             idMessage = (userPressedTrue == mQuestionBank[mCurrentIndex].isAnswerTrue()) ? R.string.correct_toast : R.string.incorrect_toast;
         }
